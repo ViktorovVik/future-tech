@@ -82,7 +82,7 @@ future-tech/
 
 3. **Компилируйте SCSS**
    ```bash
-   npm run build-css
+   npm run sass-watch
    ```
 
 4. **Откройте проект**
@@ -91,14 +91,8 @@ future-tech/
 ## 🔧 Scripts
 
 ```bash
-# Компиляция SCSS
-npm run build-css
-
 # Отслеживание изменений SCSS
-npm run watch-css
-
-# Минификация CSS для продакшена
-npm run build-css:prod
+npm run sass-watch
 ```
 
 ## 🌟 Функциональность

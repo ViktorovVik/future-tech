@@ -125,10 +125,6 @@ npm run build-css:prod
 4. Push в branch (`git push origin feature/amazing-feature`)
 5. Откройте Pull Request
 
-## 📄 Лицензия
-
-Этот проект распространяется под лицензией MIT. Подробности в файле [LICENSE](LICENSE).
-
 ## 🔗 Полезные ссылки
 
 - [Документация по ES6](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide)

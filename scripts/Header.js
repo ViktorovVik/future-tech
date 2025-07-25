@@ -20,7 +20,7 @@ class Header {
   onBurgerButtonClick = () => {
     this.burgerButtonElement.classList.toggle(this.stateClasses.isActive);
     this.overlay.classList.toggle(this.stateClasses.isActive);
-    document.documentElement.toggle(this.stateClasses.isLock);
+    document.documentElement.classList.toggle(this.stateClasses.isLock);
   }
 
   bindEvents() {

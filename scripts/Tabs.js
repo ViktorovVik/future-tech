@@ -1,4 +1,4 @@
-const rootSelector = '[data-js-tabs]'
+const  rootSelector = '[data-js-tabs]'
 
 class Tabs {
   selectors = {
@@ -13,30 +13,44 @@ class Tabs {
 
   stateAttributes = {
     ariaSelected: 'aria-selected',
-    tabIndex: 'tabindex',
+    tabIndex: 'tabindex'
   }
 
   constructor(rootElement) {
     this.rootElement = rootElement;
     this.buttonElements = this.rootElement.querySelectorAll(this.selectors.button);
     this.contentElements = this.rootElement.querySelectorAll(this.selectors.content);
-    this.state = {
-      activeTabIndex: [...this.contentElements]
-        .findIndex((buttonElement) => buttonElement.classList.contains(this.stateClasses.isActive)),
-    }
+    this.state = this.getProxyState({activeTabIndex: [...this.buttonElements].findIndex((buttonElement) => {
+        buttonElement.classList.contains(this.stateClasses.isActive)
+      })})
     this.limitTabsIndex = this.buttonElements.length - 1;
     this.bindEvents();
   }
 
+  getProxyState(initialState) {
+    return new Proxy(initialState, {
+      get: (target, prop) => {
+        return target[prop]
+      },
+      set: (target, prop, value) => {
+        target[prop] = value
+
+        this.updateUI()
+
+        return true
+      },
+    })
+  }
+
   updateUI() {
-    const {activeTabIndex} = this.state;
+    const { activeTabIndex } = this.state;
 
     this.buttonElements.forEach((buttonElement, index) => {
       const isActive = index === activeTabIndex;
 
       buttonElement.classList.toggle(this.stateClasses.isActive, isActive);
       buttonElement.setAttribute(this.stateAttributes.ariaSelected, isActive.toString());
-      buttonElement.setAttribute(this.stateAttributes.tabIndex, isActive ? '0' : -1);
+      buttonElement.setAttribute(this.stateAttributes.tabIndex, isActive ? 0 : -1);
     })
 
     this.contentElements.forEach((contentElement, index) => {
@@ -46,8 +60,8 @@ class Tabs {
     })
   }
 
-  activateTab(newTabIndex) {
-    this.state.activeTabIndex = newTabIndex
+  activateTab = (newTabIndex) => {
+    this.state.activeTabIndex = newTabIndex;
     this.buttonElements[newTabIndex].focus()
   }
 
@@ -55,7 +69,6 @@ class Tabs {
     const newTabIndex = this.state.activeTabIndex === 0
       ? this.limitTabsIndex
       : this.state.activeTabIndex - 1
-
     this.activateTab(newTabIndex)
   }
 
@@ -63,8 +76,7 @@ class Tabs {
     const newTabIndex = this.state.activeTabIndex === this.limitTabsIndex
       ? 0
       : this.state.activeTabIndex + 1
-
-      this.activateTab(newTabIndex)
+    this.activateTab(newTabIndex)
   }
 
   firstTab = () => {
@@ -76,8 +88,7 @@ class Tabs {
   }
 
   onButtonClick(buttonIndex) {
-    this.state.activeTabIndex = buttonIndex
-    this.updateUI();
+    this.state.activeTabIndex = buttonIndex;
   }
 
   onKeyDown = (event) => {
@@ -87,25 +98,24 @@ class Tabs {
       ArrowLeft: this.previousTab,
       ArrowRight: this.nextTab,
       Home: this.firstTab,
-      End: this.lastTab
+      End: this.lastTab,
     }[code]
 
     const isMacHomeKey = metaKey && code === 'ArrowLeft'
+
     if (isMacHomeKey) {
       this.firstTab()
-      this.updateUI()
       return
     }
 
-    const isMacEndKey = metaKey && code === 'ArrowRight'
-    if (isMacHomeKey) {
+    const isMacEmdKey = metaKey && code === 'ArrowRight'
+
+    if (isMacEndKey) {
       this.lastTab()
-      this.updateUI()
       return
     }
 
     action?.()
-    this.updateUI()
   }
 
   bindEvents() {
@@ -118,14 +128,13 @@ class Tabs {
 
 class TabsCollection {
   constructor() {
-    this.init();
+    this.init()
   }
 
   init() {
-    document.querySelectorAll(rootSelector).forEach((element) => {
-      new Tabs(element)
-    })
+    document.querySelectorAll(rootSelector).forEach(element => new Tabs(element));
   }
 }
 
 export default TabsCollection
+

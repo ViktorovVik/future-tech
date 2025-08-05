@@ -456,13 +456,13 @@ button[aria-label]:before {
   }
 }
 .icon--yellow-arrow::after {
-  background-image: url("../../assets/icons/arrow-top-right_yellow.svg");
+  background-image: url("../assets/icons/arrow-top-right-yellow.svg");
 }
 .icon--yellow-eye::after {
-  background-image: url("../../assets/icons/icon-eye_yellow.svg");
+  background-image: url("../assets/icons/icon-eye-yellow.svg");
 }
 .icon--gray-arrow-down::after {
-  background-image: url("../../assets/icons/arrow-down_gray.svg");
+  background-image: url("../assets/icons/arrow-down-gray.svg");
 }
 
 .logo {
